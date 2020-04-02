@@ -12,7 +12,7 @@ add_label() {
     if [[ $1 =~ ^(.+):(.+)$ ]]; then
         PKG=${BASH_REMATCH[1]}
         LABEL=${BASH_REMATCH[2]}
-        grep "$PKG:" "$LABELS_PATH" > /dev/null || echo "$PKG:" >> "$LABELS_PATH"
+        grep -m 1 "$PKG:" "$LABELS_PATH" > /dev/null || echo "$PKG:" >> "$LABELS_PATH"
         sed -E -i'~' -e "s/^(${PKG}):.*$/\1: ${LABEL}/" "$LABELS_PATH"
     else
         PKG="$1"
@@ -45,7 +45,7 @@ case $MODE in
             else
                 IS_VERSION=1
                 printf "$(tput bold)%s" $PKG
-                LABEL="$(grep "^$PKG" "$LABELS_PATH")"
+                LABEL="$(grep -m 1 "^$PKG" "$LABELS_PATH")"
                 LABEL=${LABEL##$PKG: }
                 [[ -n $LABEL ]] && printf "$(tput setaf 1) [%s]" "$LABEL"
             fi
