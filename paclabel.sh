@@ -1,6 +1,12 @@
 #!/bin/bash
 
-[[ -z $LABELS_PATH ]] && LABELS_PATH=/tmp/labels
+if [[ -z $LABELS_PATH ]]; then
+    touch /tmp/labels
+    LABELS_PATH=/tmp/labels
+elif [[ ! -f $LABELS_PATH ]]; then
+    echo "LABELS_PATH=$LABELS_PATH: no such file"
+    exit 1
+fi
 
 if command -v rg > /dev/null; then
     grep() { rg $@; }
@@ -12,7 +18,7 @@ add_label() {
     if [[ $1 =~ ^(.+):(.+)$ ]]; then
         PKG=${BASH_REMATCH[1]}
         LABEL=${BASH_REMATCH[2]}
-        grep -m 1 "$PKG:" "$LABELS_PATH" > /dev/null || echo "$PKG:" >> "$LABELS_PATH"
+        grep -m 1 "^$PKG:" "$LABELS_PATH" > /dev/null || echo "$PKG:" >> "$LABELS_PATH"
         sed -E -i'~' -e "s/^(${PKG}):.*$/\1: ${LABEL}/" "$LABELS_PATH"
     else
         PKG="$1"
