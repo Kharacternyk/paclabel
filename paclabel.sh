@@ -3,6 +3,13 @@
 [[ $1 =~ -(.).* ]] && MODE=${BASH_REMATCH[1]}
 echo $MODE
 
+store_label() {
+    PKG="$1"
+    LABEL="$2"
+    grep "$PKG:" /tmp/labels > /dev/null || echo "$PKG:" >> /tmp/labels
+    sed -E -ie "s/^(${PKG}):.*$/\1: ${LABEL}/" /tmp/labels
+}
+
 case $MODE in
     S)
         PACMAN_INVOCATION='pacman'
@@ -11,7 +18,7 @@ case $MODE in
                 PACKAGE=${BASH_REMATCH[1]}
                 LABEL=${BASH_REMATCH[2]}
                 PACMAN_INVOCATION+=" $PACKAGE"
-                echo $PACKAGE:$LABEL >> /tmp/labels
+                store_label "$PACKAGE" "$LABEL"
                 shift
             else
                 PACMAN_INVOCATION+=" $1"
@@ -31,8 +38,9 @@ case $MODE in
             else
                 IS_VERSION=1
                 printf '%s' $PKG
-                LABEL="$(grep $PKG /tmp/labels)"
-                [[ -n $LABEL ]] && printf " : %s" $LABEL
+                LABEL="$(grep "^$PKG" /tmp/labels)"
+                LABEL=${LABEL##$PKG: }
+                [[ -n $LABEL ]] && printf "$(tput bold) [%s] $(tput sgr0)" "$LABEL"
             fi
         done
         ;;
