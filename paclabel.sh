@@ -22,8 +22,8 @@ REDBG="$(tput setab 1)"
 
 add_label() {
     if [[ $1 =~ ^(.+):(.+)$ ]]; then
-        PKG=${BASH_REMATCH[1]}
-        LABEL=${BASH_REMATCH[2]}
+        PKG="${BASH_REMATCH[1]}"
+        LABEL="${BASH_REMATCH[2]}"
         grep -m 1 "^$PKG:" "$LABELS_PATH" > /dev/null || echo "$PKG:" >> "$LABELS_PATH"
         sed -E -i'~' -e "s/^(${PKG}):.*$/\1: ${LABEL}/" "$LABELS_PATH"
     else
@@ -58,11 +58,11 @@ case $MODE in
             else
                 IS_VERSION=1
                 printf "$BOLD$PKG"
-                LABEL="$(grep -m 1 "^$PKG" "$LABELS_PATH")"
-                LABEL=${LABEL##$PKG: }
-                if [[ -n $LABEL ]]; then
-                    printf " $REDBG$WHITE[$LABEL]$RESET"
-                fi
+                LABELS="$(grep -m 1 "^$PKG" "$LABELS_PATH")"
+                LABELS=${LABELS##$PKG: }
+                for LABEL in $LABELS; do
+                    printf " $BOLD$REDBG$WHITE $LABEL $RESET"
+                done
             fi
         done
         ;;
@@ -70,7 +70,7 @@ case $MODE in
         OPTS=$1
         shift
 
-        for PKG in $@; do
+        for PKG in "$@"; do
             [[ $OPTS == *[dr]* ]] && delete_label "$PKG"
             [[ $OPTS == *a* ]] && add_label "$PKG"
         done
