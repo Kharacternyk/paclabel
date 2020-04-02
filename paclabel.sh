@@ -14,6 +14,12 @@ fi
 
 [[ $1 =~ -(.).* ]] && MODE=${BASH_REMATCH[1]}
 
+GREEN="$(tput setaf 2)"
+WHITE="$(tput setaf 7)"
+BOLD="$(tput bold)"
+RESET="$(tput sgr0)"
+REDBG="$(tput setab 1)"
+
 add_label() {
     if [[ $1 =~ ^(.+):(.+)$ ]]; then
         PKG=${BASH_REMATCH[1]}
@@ -38,6 +44,7 @@ case $MODE in
             PACMAN_INVOCATION+=" $PKG"
             shift
         done
+        # here we should actually call pacman
         echo $PACMAN_INVOCATION
         ;;
     Q)
@@ -47,13 +54,15 @@ case $MODE in
         for PKG in $(pacman $@); do
             if [[ $IS_VERSION == 1 ]]; then
                 IS_VERSION=0
-                printf "$(tput setaf 2) %s\n$(tput sgr0)" $PKG
+                printf "$BOLD$GREEN $PKG\n$RESET"
             else
                 IS_VERSION=1
-                printf "$(tput bold)%s" $PKG
+                printf "$BOLD$PKG"
                 LABEL="$(grep -m 1 "^$PKG" "$LABELS_PATH")"
                 LABEL=${LABEL##$PKG: }
-                [[ -n $LABEL ]] && printf "$(tput setaf 1) [%s]" "$LABEL"
+                if [[ -n $LABEL ]]; then
+                    printf " $REDBG$WHITE[$LABEL]$RESET"
+                fi
             fi
         done
         ;;
