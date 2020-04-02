@@ -20,7 +20,7 @@ BOLD="$(tput bold)"
 RESET="$(tput sgr0)"
 REDBG="$(tput setab 1)"
 
-add_label() {
+set_labels() {
     if [[ $1 =~ ^(.+):(.+)$ ]]; then
         PKG="${BASH_REMATCH[1]}"
         LABEL="${BASH_REMATCH[2]}"
@@ -31,7 +31,7 @@ add_label() {
     fi
 }
 
-delete_label() {
+delete_labels() {
     PKG="$1"
     sed -i'~' -e "/^${PKG}:/d" "$LABELS_PATH"
 }
@@ -40,7 +40,7 @@ case $MODE in
     S)
         PACMAN_INVOCATION='pacman'
         while [[ $# != 0 ]]; do
-            add_label "$1"
+            set_labels "$1"
             PACMAN_INVOCATION+=" $PKG"
             shift
         done
@@ -71,8 +71,8 @@ case $MODE in
         shift
 
         for PKG in "$@"; do
-            [[ $OPTS == *[dr]* ]] && delete_label "$PKG"
-            [[ $OPTS == *a* ]] && add_label "$PKG"
+            [[ $OPTS == *[dr]* ]] && delete_labels "$PKG"
+            [[ $OPTS == *a* ]] && set_labels "$PKG"
         done
 
         [[ $OPTS == *l* ]] && cat "$LABELS_PATH"
