@@ -1,13 +1,15 @@
 #!/bin/bash
 
+[[ -z $LABELS_PATH ]] && $LABELS_PATH=/tmp/labels
+
 [[ $1 =~ -(.).* ]] && MODE=${BASH_REMATCH[1]}
 echo $MODE
 
 store_label() {
     PKG="$1"
     LABEL="$2"
-    grep "$PKG:" /tmp/labels > /dev/null || echo "$PKG:" >> /tmp/labels
-    sed -E -i'~' -e "s/^(${PKG}):.*$/\1: ${LABEL}/" /tmp/labels
+    grep "$PKG:" "$LABELS_PATH" > /dev/null || echo "$PKG:" >> "$LABELS_PATH"
+    sed -E -i'~' -e "s/^(${PKG}):.*$/\1: ${LABEL}/" "$LABELS_PATH"
 }
 
 case $MODE in
@@ -38,7 +40,7 @@ case $MODE in
             else
                 IS_VERSION=1
                 printf "$(tput bold)%s" $PKG
-                LABEL="$(grep "^$PKG" /tmp/labels)"
+                LABEL="$(grep "^$PKG" "$LABELS_PATH")"
                 LABEL=${LABEL##$PKG: }
                 [[ -n $LABEL ]] && printf "$(tput setaf 1) [%s]" "$LABEL"
             fi
