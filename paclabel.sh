@@ -7,7 +7,7 @@ store_label() {
     PKG="$1"
     LABEL="$2"
     grep "$PKG:" /tmp/labels > /dev/null || echo "$PKG:" >> /tmp/labels
-    sed -E -ie "s/^(${PKG}):.*$/\1: ${LABEL}/" /tmp/labels
+    sed -E -i'~' -e "s/^(${PKG}):.*$/\1: ${LABEL}/" /tmp/labels
 }
 
 case $MODE in
