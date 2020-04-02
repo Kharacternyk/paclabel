@@ -60,8 +60,13 @@ case $MODE in
                 printf "$BOLD$PKG"
                 LABELS="$(grep -m 1 "^$PKG" "$LABELS_PATH")"
                 LABELS=${LABELS##$PKG: }
+
+                COLOR=1
                 for LABEL in $LABELS; do
-                    printf " $BOLD$REDBG$WHITE $LABEL $RESET"
+                    BG="$(tput setab $COLOR)"
+                    printf " $BG$BOLD$WHITE $LABEL $RESET"
+                    COLOR=$(( COLOR+1 ))
+                    [[ $COLOR == 6 ]] && COLOR=1
                 done
             fi
         done
