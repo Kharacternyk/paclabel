@@ -34,13 +34,13 @@ case $MODE in
         for PKG in $(pacman $@); do
             if [[ $IS_VERSION == 1 ]]; then
                 IS_VERSION=0
-                printf ' %s\n' $PKG
+                printf "$(tput setaf 2) %s\n$(tput sgr0)" $PKG
             else
                 IS_VERSION=1
-                printf '%s' $PKG
+                printf "$(tput bold)%s" $PKG
                 LABEL="$(grep "^$PKG" /tmp/labels)"
                 LABEL=${LABEL##$PKG: }
-                [[ -n $LABEL ]] && printf "$(tput bold) [%s] $(tput sgr0)" "$LABEL"
+                [[ -n $LABEL ]] && printf "$(tput setaf 1) [%s]" "$LABEL"
             fi
         done
         ;;
