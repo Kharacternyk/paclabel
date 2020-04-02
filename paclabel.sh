@@ -34,7 +34,7 @@ case $MODE in
         echo $PACMAN_INVOCATION
         ;;
     Q)
-        [[ $1 == *q* ]] && pacman $@ && exit
+        [[ $1 == *[qiklcps]* ]] && pacman $@ && exit
 
         IS_VERSION=0
         for PKG in $(pacman $@); do
