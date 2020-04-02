@@ -65,7 +65,7 @@ case $MODE in
                 for LABEL in $LABELS; do
                     BG="$(tput setab $COLOR)"
                     printf " $BG$BOLD$WHITE $LABEL $RESET"
-                    COLOR=$(( COLOR+1 ))
+                    COLOR=$((COLOR + 1))
                     [[ $COLOR == 6 ]] && COLOR=1
                 done
             fi
