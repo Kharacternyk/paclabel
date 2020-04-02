@@ -1,6 +1,10 @@
 #!/bin/bash
 
-[[ -z $LABELS_PATH ]] && $LABELS_PATH=/tmp/labels
+[[ -z $LABELS_PATH ]] && LABELS_PATH=/tmp/labels
+
+if command -v rg > /dev/null; then
+    grep() { rg $@; }
+fi
 
 [[ $1 =~ -(.).* ]] && MODE=${BASH_REMATCH[1]}
 echo $MODE
