@@ -9,7 +9,7 @@ elif [[ ! -f $LABELS_PATH ]]; then
 fi
 
 if command -v rg > /dev/null; then
-    grep() { rg $@; }
+    grep() { rg "$@"; }
 fi
 
 [[ $1 =~ -(.).* ]] && MODE=${BASH_REMATCH[1]}
@@ -48,10 +48,10 @@ case $MODE in
         echo $PACMAN_INVOCATION
         ;;
     Q)
-        [[ $1 == *[qiklcps]* ]] && pacman $@ && exit
+        [[ $1 == *[qiklcps]* ]] && pacman "$@" && exit
 
         IS_VERSION=0
-        for PKG in $(pacman $@); do
+        for PKG in $(pacman "$@"); do
             if [[ $IS_VERSION == 1 ]]; then
                 IS_VERSION=0
                 printf "$BOLD$GREEN $PKG\n$RESET"
@@ -78,7 +78,7 @@ case $MODE in
         [[ $OPTS == *l* ]] && cat "$LABELS_PATH"
         ;;
     *)
-        pacman $@
+        pacman "$@"
         ;;
 esac
 
