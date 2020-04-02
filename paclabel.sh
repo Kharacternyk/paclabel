@@ -72,6 +72,7 @@ case $MODE in
         for PKG in $@; do
             [[ $OPTS == *[dr]* ]] && delete_label "$PKG"
             [[ $OPTS == *a* ]] && add_label "$PKG"
+            [[ $OPTS == *l* ]] && cat "$LABELS_PATH"
         done
         ;;
     *)
