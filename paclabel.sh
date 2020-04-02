@@ -7,29 +7,30 @@ if command -v rg > /dev/null; then
 fi
 
 [[ $1 =~ -(.).* ]] && MODE=${BASH_REMATCH[1]}
-echo $MODE
 
-store_label() {
+add_label() {
+    if [[ $1 =~ ^(.+):(.+)$ ]]; then
+        PKG=${BASH_REMATCH[1]}
+        LABEL=${BASH_REMATCH[2]}
+        grep "$PKG:" "$LABELS_PATH" > /dev/null || echo "$PKG:" >> "$LABELS_PATH"
+        sed -E -i'~' -e "s/^(${PKG}):.*$/\1: ${LABEL}/" "$LABELS_PATH"
+    else
+        PKG="$1"
+    fi
+}
+
+delete_label() {
     PKG="$1"
-    LABEL="$2"
-    grep "$PKG:" "$LABELS_PATH" > /dev/null || echo "$PKG:" >> "$LABELS_PATH"
-    sed -E -i'~' -e "s/^(${PKG}):.*$/\1: ${LABEL}/" "$LABELS_PATH"
+    sed -i'~' -e "/^${PKG}:/d" "$LABELS_PATH"
 }
 
 case $MODE in
     S)
         PACMAN_INVOCATION='pacman'
         while [[ $# != 0 ]]; do
-            if [[ $1 =~ ^(.+):(.+)$ ]]; then
-                PACKAGE=${BASH_REMATCH[1]}
-                LABEL=${BASH_REMATCH[2]}
-                PACMAN_INVOCATION+=" $PACKAGE"
-                store_label "$PACKAGE" "$LABEL"
-                shift
-            else
-                PACMAN_INVOCATION+=" $1"
-                shift
-            fi
+            add_label "$1"
+            PACMAN_INVOCATION+=" $PKG"
+            shift
         done
         echo $PACMAN_INVOCATION
         ;;
@@ -50,6 +51,15 @@ case $MODE in
             fi
         done
         ;;
-    *) ;;
-
+    L)
+        OPTS=$1
+        shift
+        for PKG in $@; do
+            [[ $OPTS == *[dr]* ]] && delete_label "$PKG"
+            [[ $OPTS == *a* ]] && add_label "$PKG"
+        done
+        ;;
+    *)
+        pacman $@
+        ;;
 esac
