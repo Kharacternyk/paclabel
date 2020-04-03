@@ -45,7 +45,11 @@ case $MODE in
         exec $PACMAN_INVOCATION
         ;;
     Q)
-        [[ $1 == *[qiklcps]* ]] && exec pacman "$@"
+        for OPT in "$@"; do
+            # Long options are unsupported.
+            [[ $OPT == --* ]] && exec pacman "$@"
+            [[ $OPT == -*[qiklcps]* ]] && exec pacman "$@"
+        done
 
         IS_VERSION=0
         for PKG in $(pacman "$@"); do
