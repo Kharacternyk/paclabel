@@ -1,7 +1,7 @@
 # Maintainer: Nazar Vinnichuk <nazar.vinnichuk at tutanota dot com>
 pkgname=paclabel-git
 _pkgname=${pkgname%-git}
-pkgver=r36.3521c81
+pkgver=r37.09badd7
 pkgrel=1
 pkgdesc="A tiny pacman wrapper that makes possible to attach labels to packages."
 url="http://github.com/Kharacternyk/${_pkgname}"
