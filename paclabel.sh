@@ -6,18 +6,12 @@ WHITE="$(tput setaf 7)"
 BOLD="$(tput bold)"
 RESET="$(tput sgr0)"
 
-if command -v rg > /dev/null; then
-    grep() { rg "$@"; }
-fi
-
-[[ $1 =~ -(.).* ]] && MODE=${BASH_REMATCH[1]}
-
 set_labels() {
     if [[ $1 =~ ^(.+):(.+)$ ]]; then
         PKG="${BASH_REMATCH[1]}"
-        LABEL="${BASH_REMATCH[2]}"
+        LABELS="${BASH_REMATCH[2]}"
         grep -m 1 "^$PKG:" "$LABELS_PATH" > /dev/null || echo "$PKG:" >> "$LABELS_PATH"
-        sed -E -i'~' -e "s/^(${PKG}):.*$/\1: ${LABEL}/" "$LABELS_PATH"
+        sed -E -i'~' -e "s/^(${PKG}):.*$/\1: ${LABELS}/" "$LABELS_PATH"
     else
         PKG="$1"
     fi
@@ -27,6 +21,12 @@ delete_labels() {
     PKG="$1"
     sed -i'~' -e "/^${PKG}:/d" "$LABELS_PATH"
 }
+
+if command -v rg > /dev/null; then
+    grep() { rg "$@"; }
+fi
+
+[[ $1 =~ -(.).* ]] && MODE=${BASH_REMATCH[1]}
 
 case $MODE in
     S)
