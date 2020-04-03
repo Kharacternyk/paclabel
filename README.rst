@@ -1,3 +1,4 @@
+.. image:: screenshot.png
 
 ``paclabel`` is a tiny ``pacman`` wrapper.
 It makes possible to attach custom text "labels" to packages.
