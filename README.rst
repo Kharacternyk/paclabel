@@ -42,5 +42,15 @@ In fact, the author does ``alias pacman=paclabel``.
 
   ``-l`` can be combined with ``-d`` and ``-s``.
 
+=======
+Caveats
+=======
+
+If ``paclabel`` encounters a long option, such as ``--query`` or ``--explicit``,
+``paclabel`` gives up and just passes the arguments to ``pacman``. For example,
+
+* ``paclabel -Qe`` shows the labels.
+* ``paclabel -Q --explicit`` and ``paclabel --query -e`` don't.
+
 .. LINKS
 .. _AUR: https://aur.archlinux.org/packages/paclabel-git/
