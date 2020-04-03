@@ -65,6 +65,7 @@ case $MODE in
                     BG="$(tput setab $COLOR)"
                     printf " $BG$BOLD$WHITE $LABEL $RESET"
                     COLOR=$((COLOR + 1))
+                    [[ $COLOR == 2 ]] && COLOR=3
                     [[ $COLOR == 6 ]] && COLOR=1
                 done
             fi
