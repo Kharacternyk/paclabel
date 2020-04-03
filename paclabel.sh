@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eu
 
 LABELS_PATH=/etc/paclabel/labels
 GREEN="$(tput setaf 2)"
@@ -51,7 +52,11 @@ case $MODE in
             else
                 IS_VERSION=1
                 printf "$BOLD$PKG"
+
+                set +e
                 LABELS="$(grep -m 1 "^$PKG" "$LABELS_PATH")"
+                set -e
+
                 LABELS=${LABELS##$PKG: }
 
                 COLOR=1
