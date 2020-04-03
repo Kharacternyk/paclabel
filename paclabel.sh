@@ -1,24 +1,16 @@
 #!/bin/bash
 
-if [[ -z $LABELS_PATH ]]; then
-    touch /tmp/labels
-    LABELS_PATH=/tmp/labels
-elif [[ ! -f $LABELS_PATH ]]; then
-    echo "LABELS_PATH=$LABELS_PATH: no such file"
-    exit 1
-fi
+LABELS_PATH=/etc/paclabel
+GREEN="$(tput setaf 2)"
+WHITE="$(tput setaf 7)"
+BOLD="$(tput bold)"
+RESET="$(tput sgr0)"
 
 if command -v rg > /dev/null; then
     grep() { rg "$@"; }
 fi
 
 [[ $1 =~ -(.).* ]] && MODE=${BASH_REMATCH[1]}
-
-GREEN="$(tput setaf 2)"
-WHITE="$(tput setaf 7)"
-BOLD="$(tput bold)"
-RESET="$(tput sgr0)"
-REDBG="$(tput setab 1)"
 
 set_labels() {
     if [[ $1 =~ ^(.+):(.+)$ ]]; then
