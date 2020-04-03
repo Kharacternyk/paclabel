@@ -5,6 +5,9 @@ It makes possible to attach custom text "labels" to packages.
 The labels will be shown while querying the packages using ``-Q``
 (unless options like ``-q`` or ``-k`` are passed, of course).
 
+.. contents:: Navigation:
+   :backlinks: none
+
 ============
 Installation
 ============
@@ -42,6 +45,13 @@ In fact, the author does ``alias pacman=paclabel``.
     if such exist, and attach *labels* to *pkg*.
 
   ``-l`` can be combined with ``-d`` and ``-s``.
+
+=======
+Storage
+=======
+
+Labels are stored in ``/etc/paclabel/labels``.
+Manual editing of the file is perfectly fine.
 
 =======
 Caveats
