@@ -30,10 +30,7 @@ delete_labels() {
 
 case $MODE in
     S)
-        if [[ $1 == *[sil]* ]]; then
-            pacman "$@"
-            exit
-        fi
+        [[ $1 == *[sil]* ]] && exec pacman "$@"
 
         PACMAN_INVOCATION='pacman'
         while [[ $# != 0 ]]; do
@@ -41,13 +38,10 @@ case $MODE in
             PACMAN_INVOCATION+=" $PKG"
             shift
         done
-        $PACMAN_INVOCATION
+        exec $PACMAN_INVOCATION
         ;;
     Q)
-        if [[ $1 == *[qiklcps]* ]]; then
-            pacman "$@"
-            exit
-        fi
+        [[ $1 == *[qiklcps]* ]] && exec pacman "$@"
 
         IS_VERSION=0
         for PKG in $(pacman "$@"); do
@@ -88,7 +82,7 @@ case $MODE in
         [[ $OPTS == *l* ]] && cat "$LABELS_PATH"
         ;;
     *)
-        pacman "$@"
+        exec pacman "$@"
         ;;
 esac
 
