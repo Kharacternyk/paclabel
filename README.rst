@@ -16,6 +16,7 @@ Usage
 
 Any valid invocations of ``pacman`` are also valid invocations of ``paclabel``
 (if it isn't like this, it is considered a bug).
+In fact, the author does ``alias pacman=paclabel``.
 
 ``paclabel`` also provides these tiny extensions to the CLI of ``pacman``:
 
