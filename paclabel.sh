@@ -23,6 +23,7 @@ delete_labels() {
     sed -i'~' -e "/^${PKG}:/d" "$LABELS_PATH"
 }
 
+# Use ripgrep instead of GNU grep if available.
 if command -v rg > /dev/null; then
     grep() { rg "$@"; }
 fi
