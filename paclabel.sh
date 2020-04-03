@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LABELS_PATH=/etc/paclabel
+LABELS_PATH=/etc/paclabel/labels
 GREEN="$(tput setaf 2)"
 WHITE="$(tput setaf 7)"
 BOLD="$(tput bold)"
