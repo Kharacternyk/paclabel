@@ -36,8 +36,7 @@ case $MODE in
             PACMAN_INVOCATION+=" $PKG"
             shift
         done
-        # here we should actually call pacman
-        echo $PACMAN_INVOCATION
+        $PACMAN_INVOCATION
         ;;
     Q)
         [[ $1 == *[qiklcps]* ]] && pacman "$@" && exit
