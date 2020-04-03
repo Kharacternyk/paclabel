@@ -4,6 +4,12 @@ It makes possible to attach custom text "labels" to packages.
 The labels will be shown while querying the packages using ``-Q``
 (unless options like ``-q`` or ``-k`` are passed, of course).
 
+============
+Installation
+============
+
+Get it from AUR_.
+
 =====
 Usage
 =====
@@ -34,3 +40,6 @@ Any valid invocations of ``pacman`` are also valid invocations of ``paclabel``
     if such exist, and attach *labels* to *pkg*.
 
   ``-l`` can be combined with ``-d`` and ``-s``.
+
+.. LINKS
+.. _AUR: https://aur.archlinux.org/packages/paclabel-git/
