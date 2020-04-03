@@ -75,6 +75,11 @@ case $MODE in
         OPTS=$1
         shift
 
+        if [[ $OPTS == *[^-Ldrsl]* ]]; then
+            echo "paclabel: invalid options: $OPTS" >&2
+            exit 1
+        fi
+
         for PKG in "$@"; do
             [[ $OPTS == *[dr]* ]] && delete_labels "$PKG"
             [[ $OPTS == *s* ]] && set_labels "$PKG"
