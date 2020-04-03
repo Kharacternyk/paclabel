@@ -30,6 +30,11 @@ delete_labels() {
 
 case $MODE in
     S)
+        if [[ $1 == *[sil]* ]]; then
+            pacman "$@"
+            exit
+        fi
+
         PACMAN_INVOCATION='pacman'
         while [[ $# != 0 ]]; do
             set_labels "$1"
@@ -39,7 +44,10 @@ case $MODE in
         $PACMAN_INVOCATION
         ;;
     Q)
-        [[ $1 == *[qiklcps]* ]] && pacman "$@" && exit
+        if [[ $1 == *[qiklcps]* ]]; then
+            pacman "$@"
+            exit
+        fi
 
         IS_VERSION=0
         for PKG in $(pacman "$@"); do
