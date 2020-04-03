@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eu
 
+[[ $# == 0 ]] && exec pacman
+
 LABELS_PATH=/etc/paclabel/labels
 GREEN="$(tput setaf 2)"
 WHITE="$(tput setaf 7)"
