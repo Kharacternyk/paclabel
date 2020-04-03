@@ -1,7 +1,7 @@
 # Maintainer: Nazar Vinnichuk <nazar.vinnichuk at tutanota dot com>
 pkgname=paclabel-git
 _pkgname=${pkgname%-git}
-pkgver=r35.82477db
+pkgver=r36.3521c81
 pkgrel=1
 pkgdesc="A tiny pacman wrapper that makes possible to attach labels to packages."
 url="http://github.com/Kharacternyk/${_pkgname}"
@@ -24,4 +24,5 @@ package() {
     install -Dm755 "${srcdir}/${_pkgname}/paclabel.sh" "${pkgdir}/usr/bin/paclabel"
     install -Dm644 "${srcdir}/${_pkgname}/README.rst" "${pkgdir}/usr/share/doc/${pkgname}/README.rst"
     install -Dm644 /dev/null "${pkgdir}/etc/${_pkgname}/labels"
+    install -Dm644 /dev/null "${pkgdir}/etc/${_pkgname}/labels~"
 }
