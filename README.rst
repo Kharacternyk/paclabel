@@ -63,5 +63,12 @@ If ``paclabel`` encounters a long option, such as ``--query`` or ``--explicit``,
 * ``paclabel -Qe`` shows the labels.
 * ``paclabel -Q --explicit`` and ``paclabel --query -e`` don't.
 
+==========
+Motivation
+==========
+
+The author finds it useful to be able to attach
+things like installation reason to a package.
+
 .. LINKS
 .. _AUR: https://aur.archlinux.org/packages/paclabel-git/
