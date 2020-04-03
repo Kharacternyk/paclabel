@@ -1,7 +1,7 @@
 
 ``paclabel`` is a tiny ``pacman`` wrapper.
 It makes possible to attach custom text "labels" to packages.
-The labels will be shown when querying packages using ``-Q``
+The labels will be shown while querying the packages using ``-Q``
 (unless options like ``-q`` or ``-k`` are passed, of course).
 
 =====
@@ -26,11 +26,11 @@ Any valid invocations of ``pacman`` are also valid invocations of ``paclabel``
 
 * While querying packages the labels will be shown next to package names.
 
-* A new operation `-L` is provided. The current interface is
+* A new operation ``-L`` is provided. The current interface is
 
   * ``paclabel -Ll`` to list all set labels.
   * ``paclabel -Ld pkg`` to delete all labels associated with *pkg*.
   * ``paclabel -Ls pkg:"labels"`` to overwrite the previous labels of *pkg*,
     if such exist, and attach *labels* to *pkg*.
 
-  Option ``-l`` can be combined with ``-d`` and ``-s``.
+  ``-l`` can be combined with ``-d`` and ``-s``.
